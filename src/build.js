@@ -13,7 +13,7 @@ const compiler = ejs.compile(iconTemplate);
 /**
  * 获取图标对应的变量名
  * 图片会被打包成js文件，此时需要使用到
- * @param {String} sourceName 
+ * @param {String} sourceName
  * @returns {String}
  */
 function getIconVarName(sourceName){
@@ -38,23 +38,23 @@ function getIconVarName(sourceName){
  * @param {*} sourceDir svg图标的文件路径（绝对路径）
  * @param {*} targetDir 打包后svg图标输出的文件路径（绝对路径）
  */
-async function build(sourceDir, targetDir, removeClass){
+export async function build(sourceDir, targetDir){
     const fileList = fs.readFileSync(fromDir, 'utf8');
     for(const filename in fileList){
         if(!(/\.svg$/.test(filename))){
             continue;
         }
-        //1. 优化svg
+        // 1. 优化svg
         const filePath = path.resolve(sourceDir, filename);
         console.log('filePath is ' + filePath);
         const data = path.readFileSync(filePath, 'utf8');
-        const handledData = await optimize(data);
-        //2. 组装组件需要的数据
+        const result = await optimize(data);
+        // 2. 组装组件需要的数据
         const iconJSONObj = parseXml(result.data).children[0];
         const iconName = path.basename(filename, '.svg');
         const icon = {
             // 用文件名来做组件调用时的名称
-            name: iconName, 
+            name: iconName,
             icon: iconJSONObj
         };
         const componentStr = compiler({
