@@ -1,12 +1,13 @@
 const path = require('path');
 const fs = require('fs');
 const ejs = require('ejs');
+const rimraf = require('rimraf');
 const parseXml = require('@rgrove/parse-xml');
 const { optimize } = require('svgo');
 const colors = require('colors');
 
 
-const iconTemplate = fs.readFileSync(__dirname + '/template/icon.ejs');
+const iconTemplate = fs.readFileSync(__dirname + '/template.ejs', 'utf8');
 console.log(__dirname + '/template/icon.ejs');
 const compiler = ejs.compile(iconTemplate);
 
@@ -18,8 +19,8 @@ const compiler = ejs.compile(iconTemplate);
  */
 function getIconVarName(sourceName){
     const reg = /^([^\x00-\xff]|[a-zA-Z_$])([^\x00-\xff]|[a-zA-Z0-9_$])*$/;
-    if(reg.test(reg)){
-        return sourceName;
+    if(reg.test(sourceName)){
+        return sourceName + 'Icon';
     }else{
         // 如果名称不满足变量名规则，则随机生成4位字符
         const getRandom = () => {
@@ -28,8 +29,8 @@ function getIconVarName(sourceName){
         }
         const chars = 'abcdefghijklmnopqrsjuvwxyz';
         const newName = `${chars[getRandom()]}${chars[getRandom()]}${chars[getRandom()]}${chars[getRandom()]}`;
-        console.log(colors.red(`文件名[${sourceName}]不满足变量命名规则，使用随机名称[${newName}]`));
-        return newName;
+        console.log(colors.blue(`文件名[${sourceName}]不满足变量命名规则，使用随机名称[${newName}]`));
+        return newName + 'Icon';
     }
 }
 
@@ -38,16 +39,18 @@ function getIconVarName(sourceName){
  * @param {*} sourceDir svg图标的文件路径（绝对路径）
  * @param {*} targetDir 打包后svg图标输出的文件路径（绝对路径）
  */
-export async function build(sourceDir, targetDir){
-    const fileList = fs.readFileSync(fromDir, 'utf8');
-    for(const filename in fileList){
+async function handler(sourceDir, targetDir){
+    const fileList = fs.readdirSync(sourceDir, 'utf8');
+    for(const filename of fileList){
+        console.log(colors.blue('filename is ' + filename));
         if(!(/\.svg$/.test(filename))){
+            console.log(colors.yellow('not svg'));
             continue;
         }
         // 1. 优化svg
         const filePath = path.resolve(sourceDir, filename);
-        console.log('filePath is ' + filePath);
-        const data = path.readFileSync(filePath, 'utf8');
+        console.log(colors.blue('filePath is ' + filePath));
+        const data = fs.readFileSync(filePath, 'utf8');
         const result = await optimize(data);
         // 2. 组装组件需要的数据
         const iconJSONObj = parseXml(result.data).children[0];
@@ -66,3 +69,15 @@ export async function build(sourceDir, targetDir){
         fs.writeFileSync(targetFilePath, componentStr);
     }
 }
+
+function build(){
+    const sourceDir = path.resolve(__dirname, '../example/svg/colorless');
+    const targetDir = path.resolve(__dirname, '../example/src/svg/colorless');
+    console.log(colors.blue('source dir is ' + sourceDir));
+    console.log(colors.blue('target dir is ' + targetDir));
+    rimraf(targetDir, async () => {
+        fs.mkdirSync(targetDir, {recursive: true});
+        await handler(sourceDir, targetDir);
+    })
+}
+build();

@@ -1,9 +1,9 @@
 function renderSvg(h, node, props){
-    const nodeProps = {
+    let nodeProps = {
         attrs: {
             ...node.attributes
         }
-    }
+    };
     // 根元素,绑定事件,设置组件的宽高颜色
     if(node.name === 'svg'){
         nodeProps.on = props.listeners;
@@ -33,7 +33,7 @@ const Icon = {
     },
 
     // 图标集合
-    icons: [], 
+    icons: [],
 
     /**
      * 给图标组件添加可使用的图标
@@ -52,7 +52,7 @@ const Icon = {
     computed: {
         /**
          * 当前要渲染的icon
-         * {name: '', icon: svgJSONObject} 
+         * {name: '', icon: svgJSONObject}
          */
         renderIcon(){
             // 如果图标没找到，会在渲染的时候处理
