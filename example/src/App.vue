@@ -2,7 +2,8 @@
   <div id="app">
       <icon name="alipay"></icon>
       <icon name="account-book"></icon>
-      <!-- <icon name="下楼做核酸" size="200px"></icon> -->
+      <icon name="医疗_电子社保卡" size="30px"></icon>
+      <icon name="医疗_听诊" class="hello-world"></icon>
   </div>
 </template>
 

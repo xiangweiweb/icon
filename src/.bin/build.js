@@ -17,6 +17,7 @@ const compiler = ejs.compile(iconTemplate);
  * @returns {String}
  */
 function getIconVarName(sourceName){
+    sourceName = sourceName.replace('-', '_');
     const reg = /^([^\x00-\xff]|[a-zA-Z_$])([^\x00-\xff]|[a-zA-Z0-9_$])*$/;
     if(reg.test(sourceName)){
         return sourceName + 'Icon';
@@ -50,16 +51,14 @@ function getResolvePath(dir){
  */
 async function handler(sourceDir, targetDir){
     const fileList = fs.readdirSync(sourceDir, 'utf8');
-    console.log('file length is  ' + fileList.length);
     for(const filename of fileList){
         console.log(colors.blue('filename is ' + filename));
         if(!(/\.svg$/.test(filename))){
-            console.log(colors.yellow('not svg'));
+            console.log(colors.blue('not svg'));
             continue;
         }
         // 1. 优化svg
         const filePath = path.resolve(sourceDir, filename);
-        console.log(colors.blue('filePath is ' + filePath));
         const data = fs.readFileSync(filePath, 'utf8');
         const result = await optimize(data);
         // 2. 组装组件需要的数据
@@ -83,20 +82,21 @@ async function handler(sourceDir, targetDir){
 module.exports = function build(source, output){
 
     const sourceDir = getResolvePath(source);
-    console.log('source dir is ' + sourceDir);
+    console.log(colors.yellow('source dir is ' + sourceDir));
     if(!fs.existsSync(sourceDir)){
-        console.log('source dir is not exist');
+        console.log(colors.red('source dir is not exist'));
         return;
     }
 
     const targetDir = getResolvePath(output);
-    console.log('output dir is ' + targetDir);
+    console.log(colors.yellow('output dir is ' + targetDir));
 
     rimraf(
         targetDir,
         async function success(){
             fs.mkdirSync(targetDir, {recursive: true});
             await handler(sourceDir, targetDir);
+            console.log(colors.green('build successful!!!'));
         }
     );
 }

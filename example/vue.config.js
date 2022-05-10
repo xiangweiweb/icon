@@ -9,7 +9,7 @@ module.exports = {
     chainWebpack: (config)=>{
         config.resolve.alias
             .set('@src', resolve('../src'))
-            .set('@/svg',resolve('src/svg'))
+            .set('@/icon',resolve('src/icon'))
     }
 }
 console.log('hello');

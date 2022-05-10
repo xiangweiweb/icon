@@ -2,10 +2,11 @@ import Vue from 'vue';
 import App from './App.vue';
 
 import Icon from '@src/icon.js';
-import alipayIcon from '@/svg/colorless/alipay.js';
-import accountBookIcon from '@/svg/colorless/account-book.js';
-import doHesuan from '@/svg/colorful/下楼做核酸.js';
-Icon.add([alipayIcon, doHesuan, accountBookIcon]);
+import alipayIcon from '@/icon/alipay.js';
+import accountBookIcon from '@/icon/account-book.js';
+import shebao from '@/icon/医疗_电子社保卡.js';
+import tingzhen from '@/icon/医疗_听诊.js';
+Icon.add([alipayIcon, accountBookIcon, shebao, tingzhen]);
 
 Vue.use(Icon);
 
