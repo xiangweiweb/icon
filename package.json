@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "icon-build": "./.bin/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xiangweiweb/icon.git"
@@ -19,8 +22,10 @@
   "dependencies": {
     "@rgrove/parse-xml": "^3.0.0",
     "colors": "^1.4.0",
+    "commander": "^9.2.0",
     "ejs": "^3.1.7",
     "rimraf": "^3.0.2",
-    "svgo": "^2.8.0"
+    "svgo": "^2.8.0",
+    "terminal-kit": "^2.4.0"
   }
 }

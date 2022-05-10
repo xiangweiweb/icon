@@ -1,7 +1,8 @@
 <template>
   <div id="app">
       <icon name="alipay"></icon>
-      <!-- <icon name="核酸做了吗"></icon> -->
+      <icon name="account-book"></icon>
+      <!-- <icon name="下楼做核酸" size="200px"></icon> -->
   </div>
 </template>
 

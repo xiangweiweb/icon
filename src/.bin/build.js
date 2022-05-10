@@ -6,9 +6,8 @@ const parseXml = require('@rgrove/parse-xml');
 const { optimize } = require('svgo');
 const colors = require('colors');
 
-
-const iconTemplate = fs.readFileSync(__dirname + '/template.ejs', 'utf8');
-console.log(__dirname + '/template/icon.ejs');
+const iconTemplatePath = path.resolve(__dirname, '../template.ejs');
+const iconTemplate = fs.readFileSync(iconTemplatePath, 'utf8');
 const compiler = ejs.compile(iconTemplate);
 
 /**
@@ -34,6 +33,16 @@ function getIconVarName(sourceName){
     }
 }
 
+function getResolvePath(dir){
+    let resolvePath = null;
+    if(path.isAbsolute(dir)){
+        resolvePath = dir;
+    }else{
+        resolvePath = path.resolve(process.cwd(), dir);
+    }
+    return resolvePath;
+}
+
 /**
  * 将svg格式打包成js(组件渲染使用)，并做svg图标优化
  * @param {*} sourceDir svg图标的文件路径（绝对路径）
@@ -41,6 +50,7 @@ function getIconVarName(sourceName){
  */
 async function handler(sourceDir, targetDir){
     const fileList = fs.readdirSync(sourceDir, 'utf8');
+    console.log('file length is  ' + fileList.length);
     for(const filename of fileList){
         console.log(colors.blue('filename is ' + filename));
         if(!(/\.svg$/.test(filename))){
@@ -68,16 +78,25 @@ async function handler(sourceDir, targetDir){
         const targetFilePath = path.resolve(targetDir, iconName +'.js');
         fs.writeFileSync(targetFilePath, componentStr);
     }
-}
+};
 
-function build(){
-    const sourceDir = path.resolve(__dirname, '../example/svg/colorless');
-    const targetDir = path.resolve(__dirname, '../example/src/svg/colorless');
-    console.log(colors.blue('source dir is ' + sourceDir));
-    console.log(colors.blue('target dir is ' + targetDir));
-    rimraf(targetDir, async () => {
-        fs.mkdirSync(targetDir, {recursive: true});
-        await handler(sourceDir, targetDir);
-    })
+module.exports = function build(source, output){
+
+    const sourceDir = getResolvePath(source);
+    console.log('source dir is ' + sourceDir);
+    if(!fs.existsSync(sourceDir)){
+        console.log('source dir is not exist');
+        return;
+    }
+
+    const targetDir = getResolvePath(output);
+    console.log('output dir is ' + targetDir);
+
+    rimraf(
+        targetDir,
+        async function success(){
+            fs.mkdirSync(targetDir, {recursive: true});
+            await handler(sourceDir, targetDir);
+        }
+    );
 }
-build();

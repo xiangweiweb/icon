@@ -78,6 +78,7 @@ const Icon = {
     },
 
     render(h){
+        console.log('render icon is ', this.renderIcon ? this.renderIcon.name : null);
         if(!this.renderIcon) return null;
         const props = {
             listeners: this.$listeners,
