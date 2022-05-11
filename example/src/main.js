@@ -2,11 +2,19 @@ import Vue from 'vue';
 import App from './App.vue';
 
 import Icon from 'icon';
-import alipayIcon from '@/icon/alipay.js';
-import accountBookIcon from '@/icon/account-book.js';
-import shebao from '@/icon/医疗_电子社保卡.js';
-import tingzhen from '@/icon/医疗_听诊.js';
-Icon.add([alipayIcon, accountBookIcon, shebao, tingzhen]);
+// import alipayIcon from '@/icon/alipay.js';
+// import accountBookIcon from '@/icon/account-book.js';
+// import shebao from '@/icon/医疗_电子社保卡.js';
+// import tingzhen from '@/icon/医疗_听诊.js';
+// Icon.add([alipayIcon, accountBookIcon, shebao, tingzhen]);
+
+const icons = require.context('@/icon', false, /\.js$/);
+icons.keys().forEach(key => {
+    const iconInstance = icons(key).default;
+    Icon.add(iconInstance);
+});
+
+
 
 Vue.use(Icon);
 
