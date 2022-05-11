@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 
-import Icon from '@src/icon.js';
+import Icon from 'icon';
 import alipayIcon from '@/icon/alipay.js';
 import accountBookIcon from '@/icon/account-book.js';
 import shebao from '@/icon/医疗_电子社保卡.js';

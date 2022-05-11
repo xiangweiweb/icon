@@ -8,7 +8,6 @@ module.exports = {
     lintOnSave: true,
     chainWebpack: (config)=>{
         config.resolve.alias
-            .set('@src', resolve('../src'))
             .set('@/icon',resolve('src/icon'))
     }
 }

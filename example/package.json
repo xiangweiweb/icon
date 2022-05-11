@@ -6,11 +6,12 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build-icon": "node ../src/.bin/index.js --source svg --output src/icon"
+    "build:icon": "icon build svg --source svg --output src/icon"
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "icon": "file:../"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.17",
