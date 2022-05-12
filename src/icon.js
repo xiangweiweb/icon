@@ -1,3 +1,10 @@
+/**
+ * SVG渲染
+ * @param {Function} h vue 渲染函数
+ * @param {Object} node icon js对象 {name: xx, icon: svgJSONObj}或svgJSONObj中的元素
+ * @param {Object} props 渲染标签的属性
+ * @returns
+ */
 function renderSvg(h, node, props){
     let nodeProps = {
         attrs: {
