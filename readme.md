@@ -9,7 +9,7 @@ npm install @xiangwei/icon
 # 使用
 1）引入icon组件
 ```js
-import Icon from 'icon';
+import Icon from '@xiangwei/icon';
 ```
 2）将准备好的svg图片打包成js
 ```json
@@ -19,6 +19,8 @@ import Icon from 'icon';
     "build:icon": "icon build svg --source ./svg --output ./src/icon"
   },
 ```
+命令行 icon build svg，--source(-s) 声明svg图片的目录，--output(-o ) 声明打包后文件的输出目录
+
 3）添加项目图标  
 > 说明：@/icon是在打包配置中定义的目录别名
 ```js
