@@ -1,7 +1,7 @@
 {
   "name": "icon",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "icon组件",
   "main": "./dist/icon.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -36,5 +36,8 @@
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.17.10",
     "@babel/preset-env": "^7.17.10"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.10"
   }
 }
