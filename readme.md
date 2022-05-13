@@ -3,7 +3,7 @@ svg 图标组件
 
 # 安装
 ```bash
-npm install icon
+npm install @xiangwei/icon
 ```
 
 # 使用

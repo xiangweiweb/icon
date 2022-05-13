@@ -1,6 +1,6 @@
 {
-  "name": "icon",
-  "version": "0.1.0",
+  "name": "@xiangwei/icon",
+  "version": "0.1.1",
   "description": "icon组件",
   "main": "./dist/icon.js",
   "scripts": {
